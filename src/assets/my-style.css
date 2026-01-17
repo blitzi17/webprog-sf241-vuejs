@@ -1,1 +1,656 @@
-h1 { color: #42b883; text-align: center; }
+/* --- ROOT & BASE --- */
+:root {
+    --paper: #fdfaf6; /* The pretty scroll/dropdown color */
+    --ink: #2b1d10;
+    --gold: #d4af37;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('../media/BG.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+/* --- HEADER & NAVIGATION --- */
+/* --- HEADER & NAVIGATION --- */
+header {
+    width: 100%;
+    position: absolute; 
+    top: 0;
+    left: 0;
+    /* ADD THESE TWO LINES TO FORCE CENTER */
+    display: flex;
+    justify-content: center;
+}
+
+.nav-container { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    padding: 40px 0;
+    /* Changed width to auto so it hugs the links and centers properly */
+    width: auto; 
+    z-index: 1000; 
+}
+
+.nav-links { 
+    display: flex; 
+    list-style: none; 
+    gap: 100px; 
+    margin: 0;
+    padding: 0;
+}
+.nav-links a { 
+    text-decoration: none; 
+    color: #fdf5e6; 
+    font-size: 16px; 
+    letter-spacing: 3px; 
+    text-transform: uppercase;
+    font-weight: bold;
+    /* Clean text shadow for depth */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); 
+    transition: all 0.3s ease; /* Smooth transition for the hover glow */
+}
+/* --- HOVER GLOW EFFECT --- */
+.nav-links a:hover {
+    color: #fff; /* Brighten text on hover */
+    /* Intense glow effect using multiple shadows */
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8), 
+        0 0 20px rgba(212, 175, 55, 0.6), 
+        2px 2px 8px rgba(0, 0, 0, 0.9);
+    transform: translateY(-2px); /* Slight lift for interactivity */
+}
+
+/* --- THE DROPDOWN FIX --- */
+.dropdown { 
+    position: relative; 
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--paper); /* The pretty color you liked */
+    min-width: 160px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    padding: 10px 0;
+    z-index: 9999;
+}
+
+/* Restoring the Hover trigger */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content li {
+    list-style: none;
+}
+
+.dropdown-content li a {
+    color: var(--ink) !important; /* Dark text for the light background */
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    text-shadow: none !important; /* Remove shadow for readability */
+    text-align: center;
+}
+
+.dropdown-content li a:hover {
+    background-color: rgba(0,0,0,0.05);
+    color: var(--gold) !important;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+}
+
+.interactive-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 900px;
+    height: 600px;
+}
+
+.portrait-box {
+    width: 700px;
+    z-index: 20;
+    transition: transform 0.8s ease;
+}
+
+.portrait-img { width: 100%; height: auto; display: block; }
+
+.scroll-area {
+    position: absolute;
+    width: 550px; 
+    height: 380px;  
+    background: var(--paper);
+    padding: 40px;
+    opacity: 0;
+    z-index: 10;
+    transition: all 0.8s ease;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+.interactive-wrapper:hover .portrait-box { transform: translateX(250px); }
+.interactive-wrapper:hover .scroll-area {
+    opacity: 1;
+    transform: translateX(-300px); 
+}
+
+.ink-text {
+    font-family: 'Dancing Script', cursive; /* Beautiful cursive font */
+    font-size: 24px; /* Increased for better readability */
+    color: #2b1d10;
+    line-height: 1.4;
+    font-weight: 700; /* Bolded as requested to stand out */
+    min-height: 150px; /* Keeps the space steady while typing */
+}
+/* --- MUSIC PLAYER STYLING (BELOW TEXT) --- */
+.music-player {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 25px; /* Creates space BELOW the typewriter text */
+    border: 1px solid rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+.song-art {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.play-button {
+    background: #2b1d10;
+    color: #fdfaf6;
+    border: none;
+    padding: 6px 15px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+/* --- THE PULSING GLOW ANIMATION --- */
+.pulsing {
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+    }
+}
+
+.play-button:hover {
+    background: #d4af37;
+    transform: scale(1.05);
+    animation: none; /* Stops pulsing when you hover over it */
+}
+
+/* --- UPDATED TITLE STYLE --- */
+.gallery-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 100px;
+    color: #fdf5e6;
+    text-align: center;
+    margin-top: 60px;    /* Reduced from 100px */
+    margin-bottom: 40px; /* Reduced from 80px */
+    text-shadow: 2px 4px 15px rgba(0,0,0,0.8);
+    
+    /* FIX: Prevents clipping of tall cursive letters */
+    line-height: 1.4; 
+    padding: 20px 0; 
+}
+.gallery-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    flex-wrap: wrap; /* Keeps them side-by-side like before */
+}
+
+.gallery-item {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    border-radius: 15px;
+    overflow: hidden; /* Keeps the overlay inside the frame */
+    cursor: pointer;
+}
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* THIS MAXIMIZES THE IMAGE TO FILL THE BOX */
+    display: block;
+}
+.hover-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    
+    /* ADD THIS LINE - It is the most important one! */
+    pointer-events: none; 
+    
+    z-index: 2;
+}
+
+.gallery-item:hover .hover-overlay {
+    opacity: 1;
+}
+/* Style the text inside the overlay */
+.hover-overlay h3 {
+    color: #fdf5e6;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.hover-overlay p {
+    color: #fdf5e6;
+    font-size: 16px;
+}
+/* --- THE COMPLETE MODAL --- */
+.modal, #galleryModal {
+    display: none; 
+    position: fixed;
+    z-index: 10001;
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #fdf5e6; /* Restored 'paper' color */
+    width: 90%;
+    max-width: 750px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+}
+
+/* THE CLOSE BUTTON */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #2b1d10; /* Dark ink color */
+    z-index: 10002;
+    transition: transform 0.2s ease;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+    color: #d4af37; /* Gold color on hover */
+}
+
+/* THE IMAGE */
+#modalImg {
+    width: 100%;
+    max-height: 400px; /* Limits image height so text fits on screen */
+    object-fit: cover;
+    display: block;
+}
+
+/* THE TEXT CONTAINER */
+.modal-text {
+    padding: 30px;
+    color: #2b1d10; /* Dark ink color */
+}
+#modalDesc {
+    color: #444;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    display: block !important; /* Forces it to show */
+}
+/* Style for the text so it isn't invisible */
+#modalTitle {
+    color: #2b1d10; 
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: block !important; /* Forces it to show */
+}
+
+/* Spacing below the "Gallery" title */
+.gallery-subtitle {
+    margin-bottom: 40px; 
+}
+
+/* --- THE SCROLL TRACK --- */
+.infinite-container {
+    overflow: hidden;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.scroll-track {
+    display: flex;
+    /* (300px width + 30px margin) * 10 cards */
+    width: calc(330px * 10); 
+    animation: scrollLinear 25s linear infinite;
+}
+
+.scroll-track:hover {
+    animation-play-state: paused;
+}
+
+/* --- THE INDIVIDUAL CARDS --- */
+.scroll-card {
+    width: 300px;
+    height: 400px;
+    margin: 0 15px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+    transition: transform 0.4s ease;
+}
+
+.scroll-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 2. Fix the Overlay Positioning */
+.card-overlay {
+    position: absolute;
+    bottom: -100%;      /* Starts hidden below the image */
+    left: 0;
+    width: 100%;
+    height: 100%;       /* Changed to 100% to cover the image like your recording */
+    background: rgba(43, 29, 16, 0.7); /* Aesthetic dark tint */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: bottom 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none; /* Allows the click to pass through to the gallery-item */
+    z-index: 2;
+}
+
+/* 3. Trigger the slide-up on hover */
+.gallery-item:hover .card-overlay {
+    bottom: 0;          /* Slides up into view */
+}
+
+/* 4. Style the text inside */
+.card-overlay h3 {
+    color: #fdf5e6;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.card-overlay p {
+    color: #fdf5e6;
+    font-family: 'Dancing Script', cursive;
+    font-size: 18px;
+}
+
+/* HOVER STATES */
+.scroll-card:hover .card-overlay {
+    bottom: 0;
+}
+
+.scroll-card:hover {
+    transform: scale(1.03);
+}
+
+/* --- ANIMATION LOGIC --- */
+@keyframes scrollLinear {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-330px * 5)); } /* Reset after 5 cards */
+}
+
+.reveal-text {
+    overflow: hidden;
+    display: block;
+    margin-bottom: 60px;
+}
+
+/* Individual character styling */
+.reveal-text span {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(30px) scale(0.8);
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    
+    /* FIX: Ensures the blur doesn't hit the edge of the span */
+    padding: 0 5px; 
+}
+
+/* Active state */
+.reveal-text.active span {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+}
+
+.projects-stack-container {
+    width: 100%;
+    padding: 40px 0; /* Reduced from 100px */
+}
+
+.stack-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px; /* Reduced from 10vh to make them closer */
+}
+
+.project-card {
+    position: sticky;
+    top: 100px; 
+    width: 85%;
+    max-width: 850px;
+    height: 350px; /* Slightly shorter to reduce overall section height */
+    border-radius: 25px;
+    padding: 30px;
+    
+    /* FROSTED GLASS EFFECT */
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    
+    /* SOFT GOLD BORDER & SHADOW */
+    border: 1px solid rgba(253, 245, 230, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    
+    z-index: var(--index);
+    margin-bottom: 60px; /* REDUCED: Brings sections much closer together */
+    transition: transform 0.4s ease;
+}
+
+.card-content {
+    color: white;
+    width: 100%;
+}
+
+/* Make text more readable on the glass */
+.card-content h2 {
+    color: #fdf5e6;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+
+.card-content p {
+    color: #fdf5e6;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+.card-content img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+/* --- THE DESCRIPTION OVERLAY --- */
+.card-overlay {
+    position: absolute;
+    bottom: -100%; /* Hidden by default */
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: rgba(43, 29, 16, 0.85); /* Dark ink background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: bottom 0.4s ease;
+}
+
+.card-overlay p {
+    color: #fdf5e6;
+    font-family: 'Dancing Script', cursive;
+    font-size: 22px;
+}
+
+/* HOVER STATES */
+.scroll-card:hover .card-overlay {
+    bottom: 0;
+}
+
+/* This ensures the title lands below your navigation bar */
+#projects-section, #gallery-section, #about-title {
+    scroll-margin-top: 120px; 
+}
+
+/* Makes the move from top to bottom smooth instead of a jump */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- FOOTER STYLING --- */
+.main-footer {
+    background-color: var(--ink); /* Using your ink color */
+    color: var(--paper); /* Using your light paper color for text */
+    padding: 60px 20px 20px 20px;
+    margin-top: 100px;
+    border-top: 2px solid var(--gold); /* Gold line at the top */
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
+
+.dancing-logo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 40px;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    color: var(--gold);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 12px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.footer-section ul li a {
+    color: var(--paper);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: var(--gold);
+}
+
+/* SOCIAL ICONS */
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: var(--ink);
+    background: var(--paper);
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    background: var(--gold);
+    transform: translateY(-3px);
+}
+
+/* BOTTOM BAR */
+.footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(253, 250, 246, 0.1);
+    font-size: 12px;
+    letter-spacing: 1px;
+    opacity: 0.6;
+}
