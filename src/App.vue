@@ -4,5 +4,205 @@ import './assets/my-style.css';
 </script>
 
 <template>
-  <h1>{{ greeting }}</h1>
+<body>
+
+    <div class="bg-overlay"></div>
+
+    <header>
+        <nav class="nav-container">
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li class="dropdown">
+                   <a href="#about-title" class="dropbtn">ABOUT</a>
+                    <ul class="dropdown-content">
+                        <li><a href="javascript:void(0)" onclick="openHobbies()">HOBBIES</a></li>
+                        <li><a href="javascript:void(0)" onclick="openGoals()">GOALS</a></li>
+                        <li><a href="javascript:void(0)" onclick="openEducation()">EDUCATION</a></li>
+                    </ul>
+                </li>
+                <li><a href="#projects-section">PROJECTS</a></li>
+                <li><a href="#gallery-section">GALLERY</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">CONTACT</a>
+                    <ul class="dropdown-content">
+                        <li><a href="https://linkedin.com" target="_blank">LINKEDIN</a></li>
+                        <li><a href="https://github.com" target="_blank">GITHUB</a></li>
+                        <li><a href="https://instagram.com" target="_blank">INSTAGRAM</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+<main class="hero">
+        <div class="main-display">
+            <div class="interactive-wrapper" id="frameTrigger">
+        <div class="scroll-area" id="about-me-scroll">
+    <div id="typewriter" class="ink-text"></div>
+
+    <div class="music-player">
+        <img src="../media/album.jpg" alt="Song Art" class="song-art">
+        <div class="song-details">
+            <p class="song-name"><b>Young and Beautiful</b></p>
+            <p class="artist-name">Lana Del Ray</p>
+            <button id="playBtn" class="play-button pulsing">▶ PLAY</button>
+        </div>
+    </div>
+    
+    <audio id="bgMusic" loop>
+        <source src="../media/BG MUSIC.mp3" type="audio/mpeg">
+    </audio>
+</div>
+                <div class="portrait-box">
+                    <img src="../media/MAIN PIC.png" alt="Karol Joy" class="portrait-img">
+                </div>
+            </div>
+        </div>
+    </main>
+<h1 id="about-title" class="gallery-title reveal-text">About Me</h1>
+   <section class="gallery-container">
+    <div class="gallery-item" onclick="openModal('../media/HOB.png', 'Hobbies', 'My hobbies are too many to count but I really love creating bouquets in different ways, I wish to create things that makes me happy.')">
+        <img src="../media/HOB.png" alt="Hobbies">
+        <div class="hover-overlay">
+            <h3>Hobbies</h3>
+            <p>View Details</p>
+        </div>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('../media/GOAL.png', 'Goals', 'My Goals are simple: Family, Travel, Happiness, and Prosperity.')">
+        <img src="../media/GOAL.png" alt="Goals">
+        <div class="hover-overlay">
+            <h3>Goals</h3>
+            <p>View Details</p>
+        </div>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('../media/EDUC.png', 'Education', 'Graduated in APC-SHS-STEM Specialized in I.T. Currently taking APC-BSCS-SF.')">
+        <img src="../media/EDUC.png" alt="Education">
+        <div class="hover-overlay">
+            <h3>Education</h3>
+            <p>View Details</p>
+        </div>
+    </div>
+</section>
+
+<div id="galleryModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <img id="modalImg" src="">
+        <div class="modal-text">
+            <h2 id="modalTitle"></h2>
+            <p id="modalDesc"></p>
+        </div>
+    </div>
+</div>
+
+    <div class="projects-stack-container">
+    <h1 id="projects-section" class="gallery-title reveal-text">Projects</h1>
+
+    <div class="stack-wrapper">
+        <div class="project-card card-1" style="--index: 1;">
+            <div class="card-content">
+                <h2>Magtanim Ay Di Biro</h2>
+                <p>An Arduino-based project that automatically measures the soil's condition and water level and adds water based on those two parameters.</p>
+                <img src="../media/Magtanim.jpg" alt="Magtanim Ay Di Biro">
+            </div>
+        </div>
+
+        <div class="project-card card-2" style="--index: 2;">
+            <div class="card-content">
+                <h2>JOY: Virtual Assistant</h2>
+                <p>A Python-based system that employs voice recognition and follows order based on voice commands.</p>
+                <img src="../media/VA.jpg" alt="JOY">
+            </div>
+        </div>
+
+        <div class="project-card card-3" style="--index: 3;">
+            <div class="card-content">
+                <h2>Attendance Face Track</h2>
+                <p>Our team built an attendance face tracker solution that will assist you with attendance tracking without any bother.</p>
+                <img src="../media/Facial.jpg" alt="Attendance Face Track">
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div class="scrolling-gallery-section">
+  <h1 id="gallery-section" class="gallery-title reveal-text">Gallery</h1>
+    
+    <div class="infinite-container">
+        <div class="scroll-track">
+            <div class="scroll-card">
+                <img src="../media/coffee.jpeg" alt="Memory 1">
+                <div class="card-overlay"><p>Coffee Run</p></div>
+            </div>
+            <div class="scroll-card">
+                <img src="../media/family.png" alt="Memory 2">
+                <div class="card-overlay"><p>Family: Peace</p></div>
+            </div>
+            <div class="scroll-card">
+                <img src="../media/flowers.jpeg" alt="Memory 3">
+                <div class="card-overlay"><p>Creative Love</p></div>
+            </div>
+            <div class="scroll-card">
+                <img src="../media/picto.jpeg" alt="Memory 4">
+                <div class="card-overlay"><p>Artistic View Point</p></div>
+            </div>
+            <div class="scroll-card">
+                <img src="../media/friends.jpeg" alt="Memory 5">
+                <div class="card-overlay"><p>Unlimited Laugh</p></div>
+            </div>
+
+            <div class="scroll-card"><img src="../media/coffee.jpeg" alt=""><div class="card-overlay"><p>Coffee Run</p></div></div>
+            <div class="scroll-card"><img src="../media/family.png" alt=""><div class="card-overlay"><p>Family: Peace</p></div></div>
+            <div class="scroll-card"><img src="../media/flowers.jpeg" alt=""><div class="card-overlay"><p>Creative Love</p></div></div>
+            <div class="scroll-card"><img src="../media/picto.jpeg" alt=""><div class="card-overlay"><p>Artistic View Point</p></div></div>
+            <div class="scroll-card"><img src="../media/friends.jpeg" alt=""><div class="card-overlay"><p>Unlimited Laugh</p></div></div>
+        </div>
+    </div>
+</div>
+
+    <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-logo">
+            <h2 class="dancing-logo">Karol Joy</h2>
+            <p>Digital Creator & Innovator</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <ul>
+                <li><i class="fas fa-envelope"></i> @student.apc.edu.ph</li>
+                <li><i class="fas fa-phone"></i> +63 9155677826</li>
+                <li><i class="fas fa-map-marker-alt"></i> Manila, Philippines</li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>Navigation</h3>
+            <ul>
+                <li><a href="#about-title">About Me</a></li>
+                <li><a href="#projects-section">Projects</a></li>
+                <li><a href="#gallery-section">Gallery</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/karol.joy.ronquillo.2025/"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/bltzi_/"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/karol-joy-ronquillo-95964b242/"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 KAROL JOY. All Rights Reserved.</p>
+    </div>
+</footer>
+
+    <script src="../JS/main.js"></script>
+</body>
 </template>
