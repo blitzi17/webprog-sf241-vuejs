@@ -1,14 +1,28 @@
 <script setup>
-import { onMounted } from 'vue'; // Needed for DOM manipulation in Vue
+/* --- TASK 07: SUPABASE IMPORTS --- */
+import { ref, onMounted } from 'vue';
+import { supabase } from './supabaseClient'; // Import the client you just created
 import './assets/my-style.css';
 
-/* --- TASK 5: V-FOR DATA --- */
+/* --- TASK 06/07: DATABASE STATE --- */
+const instruments = ref([]);
+
+async function getInstruments() {
+    const { data, error } = await supabase.from('instruments').select();
+    if (error) {
+        console.error("Error fetching instruments:", error);
+    } else {
+        instruments.value = data;
+    }
+}
+
+/* --- TASK 5: V-FOR DATA (Hardcoded) --- */
 const galleryItems = [
   { 
     id: 1, 
     title: 'Hobbies', 
     img: '/media/HOB.png', 
-    desc: 'My hobbies are too many to count but I really love creating bouquets in different ways, I wish to create things that makes me happy.' 
+    desc: 'My hobbies are too many to count but I really love creating bouquets in different ways...' 
   },
   { 
     id: 2, 
@@ -26,9 +40,12 @@ const galleryItems = [
 
 /* --- YOUR ORIGINAL LOGIC (Task 4) --- */
 onMounted(() => {
+    // Fetch database data when the page loads
+    getInstruments();
+
     const trigger = document.getElementById('frameTrigger');
     const typewriter = document.getElementById('typewriter');
-    const textToType = "Welcome to my digital space! I am Karol Joy, a creator and innovator. Thank you for opening this scroll. Explore my journey and projects below...";
+    const textToType = "Welcome to my digital space! I am Karol Joy, a creator and innovator...";
 
     let i = 0;
     let isTyping = false;
@@ -55,7 +72,7 @@ onMounted(() => {
         }
     }
 
-    /* Music & Observer Logic goes here (Unchanged) */
+    /* Music Logic */
     const music = document.getElementById('bgMusic');
     const playBtn = document.getElementById('playBtn');
 
@@ -64,17 +81,14 @@ onMounted(() => {
             if (music.paused) {
                 music.play();
                 playBtn.innerText = "⏸ PAUSE";
-                playBtn.classList.remove('pulsing');
-                playBtn.style.background = "#d4af37";
             } else {
                 music.pause();
                 playBtn.innerText = "▶ PLAY";
-                playBtn.classList.add('pulsing');
-                playBtn.style.background = "#2b1d10";
             }
         });
     }
 
+    /* Reveal Text Animation */
     const revealTitles = document.querySelectorAll('.reveal-text');
     revealTitles.forEach(title => {
         const text = title.textContent;
@@ -91,8 +105,6 @@ onMounted(() => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-            } else {
-                entry.target.classList.remove('active');
             }
         });
     }, { threshold: 0.5 });
@@ -100,7 +112,7 @@ onMounted(() => {
     revealTitles.forEach(t => textObserver.observe(t));
 });
 
-/* Modal functions made global for HTML onclicks */
+/* Modal functions */
 window.openModal = function(imgSrc, title, desc) {
     const modal = document.getElementById('galleryModal');
     document.getElementById('modalImg').src = imgSrc;
@@ -112,11 +124,6 @@ window.openModal = function(imgSrc, title, desc) {
 window.closeModal = function() {
     document.getElementById('galleryModal').style.display = "none";
 }
-
-window.openHobbies = () => window.openModal('/media/HOB.png', 'Hobbies', '...');
-window.openGoals = () => window.openModal('/media/GOAL.png', 'Goals', '...');
-window.openEducation = () => window.openModal('/media/EDUC.png', 'Education', '...');
-
 </script>
 
 <template>
@@ -129,21 +136,11 @@ window.openEducation = () => window.openModal('/media/EDUC.png', 'Education', '.
                 <li class="dropdown">
                    <a href="#about-title" class="dropbtn">ABOUT</a>
                     <ul class="dropdown-content">
-                        <li><a href="javascript:void(0)" onclick="openHobbies()">HOBBIES</a></li>
-                        <li><a href="javascript:void(0)" onclick="openGoals()">GOALS</a></li>
-                        <li><a href="javascript:void(0)" onclick="openEducation()">EDUCATION</a></li>
+                        <li><a href="javascript:void(0)" onclick="openModal('/media/HOB.png', 'Hobbies', 'Creating bouquets...')">HOBBIES</a></li>
+                        <li><a href="javascript:void(0)" onclick="openModal('/media/GOAL.png', 'Goals', 'Happiness and Prosperity.')">GOALS</a></li>
                     </ul>
                 </li>
-                <li><a href="#projects-section">PROJECTS</a></li>
-                <li><a href="#gallery-section">GALLERY</a></li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropbtn">CONTACT</a>
-                    <ul class="dropdown-content">
-                        <li><a href="https://linkedin.com" target="_blank">LINKEDIN</a></li>
-                        <li><a href="https://github.com" target="_blank">GITHUB</a></li>
-                        <li><a href="https://instagram.com" target="_blank">INSTAGRAM</a></li>
-                    </ul>
-                </li>
+                <li><a href="#supabase-section">DATABASE</a></li>
             </ul>
         </nav>
     </header>
@@ -157,7 +154,6 @@ window.openEducation = () => window.openModal('/media/EDUC.png', 'Education', '.
                         <img src="/media/album.jpg" alt="Song Art" class="song-art">
                         <div class="song-details">
                             <p class="song-name"><b>Young and Beautiful</b></p>
-                            <p class="artist-name">Lana Del Ray</p>
                             <button id="playBtn" class="play-button pulsing">▶ PLAY</button>
                         </div>
                     </div>
@@ -171,6 +167,18 @@ window.openEducation = () => window.openModal('/media/EDUC.png', 'Education', '.
             </div>
         </div>
     </main>
+
+    <section id="supabase-section" style="padding: 50px; text-align: center; color: white;">
+        <h2 class="reveal-text">Supabase Instruments</h2>
+        <div class="instrument-list">
+            <p v-if="instruments.length === 0">Connecting to Supabase...</p>
+            <ul>
+                <li v-for="inst in instruments" :key="inst.id">
+                    {{ inst.name }}
+                </li>
+            </ul>
+        </div>
+    </section>
 
     <h1 id="about-title" class="gallery-title reveal-text">About Me</h1>
     
@@ -194,5 +202,4 @@ window.openEducation = () => window.openModal('/media/EDUC.png', 'Education', '.
             </div>
         </div>
     </div>
-
-    </template>
+</template>
